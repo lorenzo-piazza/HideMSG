@@ -1,1 +1,1 @@
-# HIdeMSG
+# HideMSG
