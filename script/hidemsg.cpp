@@ -6,6 +6,7 @@ int main(int argc, char* argv[]) {
 
     if (opt.doEncode) {
         //TODO: do encoding
+        //Encoding111 done, test by saving image on file and retrieving message
     }
     else if (opt.doDecode) {
         //TODO implement decoding

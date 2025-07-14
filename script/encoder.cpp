@@ -25,7 +25,7 @@ void Encoder::set_key(const std::string &key) {
 }
 
 bool Encoder::can_embed_message(const std::string &msg) {
-    return (msg.length() + 3) * 8 <= get_size(); //+3 needed for understanding when the message finish (by adding "&&&")
+    return msg.length() * 8 <= get_size(); 
 }
 
 Encoder::size_type Encoder::get_size() {
@@ -43,7 +43,7 @@ Encoder::size_type Encoder::get_size() {
 Encoder::byte* Encoder::read_file() {
     //open the file
     FILE* f = open_file_safe();
-
+    fseek(f, HEADER_LENGTH, 0); //jump header
     //read image and save to heap
     size_type size = get_size();
     byte* cover_image = new byte[size];

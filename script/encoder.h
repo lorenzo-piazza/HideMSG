@@ -4,6 +4,7 @@
 #define HEADER_LENGTH 54
 #define WIDTH_BYTE_N 18
 #define HEIGHT_BYTE_N 22
+#define DELIMITER "&&&"
 
 #include <fstream>
 #include <iostream>
@@ -19,8 +20,8 @@ class Encoder {
         Encoder(const std::string &path);
         Encoder(const std::string &path, const std::string key);
         ~Encoder();
-        virtual byte* encode(const std::string &msg) = 0;
-        virtual byte* decode() = 0;
+        virtual byte* encode(std::string &msg) = 0;
+        virtual std::string decode() = 0;
         void print_size();
         void set_key(const std::string &key);
     protected:
