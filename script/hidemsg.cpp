@@ -5,14 +5,10 @@ int main(int argc, char* argv[]) {
     Options opt = inputParser.parseOptions();
 
     if (opt.doEncode) {
-        // Qui puoi richiamare la tua funzione di encoding:
-        // encode(opt.mode, opt.path, opt.key, *opt.message);
-        std::cout << "Encoding del messaggio: " << *opt.message << std::endl;
+        //TODO: do encoding
     }
     else if (opt.doDecode) {
-        // Qui puoi richiamare la tua funzione di decoding:
-        // decode(opt.mode, opt.path, opt.key);
-        std::cout << "Decoding del file in: " << opt.path << std::endl;
+        //TODO implement decoding
     }
 
     return EXIT_SUCCESS;
