@@ -7,7 +7,7 @@ class Encoder111 : public Encoder {
     public:
         Encoder111(const std::string &path);
         Encoder111(const std::string &path, const std::string key);
-        byte* encode(std::string &msg) override;
+        BitmapFileHandler::byte* encode(std::string &msg) override;
         std::string decode() override;
     private:
 };

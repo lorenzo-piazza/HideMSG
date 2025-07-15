@@ -1,0 +1,38 @@
+#ifndef BITMAPFILEHANDLER_H
+#define BITMAPFILEHANDLER_H
+
+#include <stdio.h>
+#include <iostream>
+#include <stdexcept>
+
+#define HEADER_LENGTH 54
+#define WIDTH_BYTE_N 18
+#define HEIGHT_BYTE_N 22
+#define SIZE_BYTE_N 34
+
+class BitmapFileHandler {
+    public:
+        typedef unsigned char byte;
+        typedef unsigned int size_type;
+        BitmapFileHandler(const std::string &path);
+        ~BitmapFileHandler();
+        const byte* get_header() const;
+        size_type get_header_size() const;
+
+        byte* get_pixels();
+        size_type get_size_with_padding() const;
+
+        void change_pixels(const byte* pixels);
+        void save_file(const std::string& path);
+    private:
+        FILE* open_file_safe();
+        void extract_dimensions();
+        const std::string _path;
+        size_type _width;
+        size_type _height;
+        size_type _size;
+        byte* _header;
+        byte* _pixels;
+};
+
+#endif
