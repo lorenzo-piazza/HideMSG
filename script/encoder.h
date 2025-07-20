@@ -10,6 +10,7 @@
 #include "../cryptopp/sha3.h"
 #include "bitmapfilehandler.h"
 #include <cstdlib>
+#include "cipherhandler.h"
 
 class Encoder {
     public:
@@ -25,9 +26,11 @@ class Encoder {
         std::string _key;
         BitmapFileHandler _handler;
         bool can_embed_message(const std::string &msg);
+        CipherHandler _aes;
     private:
         std::string _path;
         const std::string& generate_path_name();
+        
 };
 
 #endif

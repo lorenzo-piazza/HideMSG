@@ -5,9 +5,7 @@ int main(int argc, char* argv[]) {
     Options opt = inputParser.parseOptions();
 
     if (opt.doEncode) {
-        //TODO: do encoding
-        //Encoding111 done, do encryption
-        
+        //TODO: do Encoding422
     }
     else if (opt.doDecode) {
         //TODO implement decoding

@@ -1,17 +1,13 @@
 #include "encoder.h"
 
 Encoder::Encoder(const std::string &path) : Encoder(path, "") {}
-Encoder::Encoder(const std::string &path, const std::string key) : _handler(path), _path(path) {
+Encoder::Encoder(const std::string &path, const std::string key) : _handler(path), _path(path), _aes(_key) {
     set_key(key);
 }
 
 void Encoder::set_key(const std::string &key) {
-    //SHA3-256
     if(!key.empty()) {
-        CryptoPP::SHA3_256 hash;
-        hash.Update((const BitmapFileHandler::byte*)key.data(), key.size());
-        this->_key.resize(hash.DigestSize());
-        hash.Final((BitmapFileHandler::byte*)&this->_key[0]);
+        _key = key;
     }
 }
 
