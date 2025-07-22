@@ -74,18 +74,11 @@ std::string Encoder422::decode() {
 
     // Read until three delimiters or end of image data
     while(delimiter_cont < 3 && cont < size) {
-        for(int z = 0; z < width && delimiter_cont < 3;) {
+        for(int z = 0; z < width && delimiter_cont < 3; z += 3, ++cont) {
             BitmapFileHandler::byte tmp = 0;
-            int i = 0;
-            while(i < 8 && cont < size) {
-                int bit_to_read = (z % 3) == 0 ? 4 : 1;
-                for(int j = bit_to_read * 2; j > 0; j = j >> 1, ++i) {
-                    bool bit = img[cont] & j;
-                    tmp = (tmp << 1) | bit;
-                }
-                ++z;
-                ++cont;
-            }
+            tmp = (tmp | (img[cont] & 15)) << 2;
+            tmp = (tmp | (img[++cont] & 3)) << 2;
+            tmp = tmp | (img[++cont] & 3);
             if(tmp == '&')
                 ++delimiter_cont;
             msg += tmp; 
