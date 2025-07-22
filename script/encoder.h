@@ -25,7 +25,7 @@ class Encoder {
     protected:
         std::string _key;
         BitmapFileHandler _handler;
-        bool can_embed_message(const std::string &msg);
+        virtual bool can_embed_message(const std::string &msg) = 0;
         CipherHandler _aes;
     private:
         std::string _path;

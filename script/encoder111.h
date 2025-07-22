@@ -9,6 +9,7 @@ class Encoder111 : public Encoder {
         Encoder111(const std::string &path, const std::string key);
         BitmapFileHandler::byte* encode(std::string &msg) override;
         std::string decode() override;
+        bool can_embed_message(const std::string &msg) override;
     private:
 };
 

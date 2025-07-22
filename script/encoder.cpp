@@ -11,10 +11,6 @@ void Encoder::set_key(const std::string &key) {
     }
 }
 
-bool Encoder::can_embed_message(const std::string &msg) {
-    return msg.length() * 8 <= _handler.get_size_with_padding(); 
-}
-
 void Encoder::encode_and_save(std::string &msg) {
     BitmapFileHandler::byte* img = encode(msg);
     if(img == nullptr)

@@ -18,9 +18,13 @@ class BitmapFileHandler {
         ~BitmapFileHandler();
         const byte* get_header() const;
         size_type get_header_size() const;
+        size_type get_width() const;
+        size_type get_height() const;
+        size_type get_row_padded() const;
 
         byte* get_pixels();
         size_type get_size_with_padding() const;
+        size_type get_size_without_padding() const;
 
         void change_pixels(const byte* pixels);
         void save_file(const std::string& path);

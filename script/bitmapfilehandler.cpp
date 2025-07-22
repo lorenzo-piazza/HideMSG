@@ -46,6 +46,10 @@ BitmapFileHandler::size_type BitmapFileHandler::get_size_with_padding() const {
     return _size;
 }
 
+BitmapFileHandler::size_type BitmapFileHandler::get_size_without_padding() const {
+    return _height * _width;
+}
+
 const BitmapFileHandler::byte* BitmapFileHandler::get_header() const {
     byte* header_cpy = new byte[HEADER_LENGTH];
     if(header_cpy != nullptr) {
@@ -57,6 +61,18 @@ const BitmapFileHandler::byte* BitmapFileHandler::get_header() const {
 
 BitmapFileHandler::size_type BitmapFileHandler::get_header_size() const {
     return HEADER_LENGTH;
+}
+
+BitmapFileHandler::size_type BitmapFileHandler::get_width() const {
+    return _width;
+}
+
+BitmapFileHandler::size_type BitmapFileHandler::get_height() const {
+    return _height;
+}
+
+BitmapFileHandler::size_type BitmapFileHandler::get_row_padded() const {
+    return (_width * 3 + 3) & (~3);
 }
 
 void BitmapFileHandler::change_pixels(const byte* pixels) {
