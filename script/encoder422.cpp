@@ -3,10 +3,13 @@
 Encoder422::Encoder422(const std::string &path) : Encoder(path)  {}
 Encoder422::Encoder422(const std::string &path, const std::string key) : Encoder(path, key) {}
 
+// Determine if the message length (in characters) can fit into the image data (no padding)
 bool Encoder422::can_embed_message(const std::string &msg) {
+    // Here each character consumes one byte (so one pixel) of embedding space
     return msg.length() <= _handler.get_size_without_padding(); 
 }
 
+// Embed the message into the image buffer using a 4:2:2 scheme
 BitmapFileHandler::byte* Encoder422::encode(std::string &msg) {
     if(!Encoder::_key.empty()) {
         msg = _aes.encrypt(msg);
@@ -57,5 +60,44 @@ BitmapFileHandler::byte* Encoder422::encode(std::string &msg) {
     return img;
 }
 std::string Encoder422::decode() {
-    //TODO
+    short delimiter_cont = 0;
+    int cont = 0;
+    BitmapFileHandler::byte* img = _handler.get_pixels();
+    if(img == nullptr)
+        throw std::runtime_error("Error reading file");
+    
+    std::string msg;
+    int size = _handler.get_size_with_padding();
+    int row_padded = _handler.get_row_padded();
+    int width = _handler.get_width() * 3; //* 3 needed to get width bytes number
+    int padding_length = row_padded - width;
+
+    // Read until three delimiters or end of image data
+    while(delimiter_cont < 3 && cont < size) {
+        for(int z = 0; z < width && delimiter_cont < 3;) {
+            BitmapFileHandler::byte tmp = 0;
+            int i = 0;
+            while(i < 8 && cont < size) {
+                int bit_to_read = (z % 3) == 0 ? 4 : 1;
+                for(int j = bit_to_read * 2; j > 0; j = j >> 1, ++i) {
+                    bool bit = img[cont] & j;
+                    tmp = (tmp << 1) | bit;
+                }
+                ++z;
+                ++cont;
+            }
+            if(tmp == '&')
+                ++delimiter_cont;
+            msg += tmp; 
+        }
+        cont += padding_length;
+    }
+    delete[] img;
+    img = nullptr;
+    // Remove delimiter characters from message
+    msg = msg.substr(0, msg.length() - 3);
+    if(!Encoder::_key.empty()) {
+        msg = _aes.decrypt(msg);
+    }
+    return msg;
 }

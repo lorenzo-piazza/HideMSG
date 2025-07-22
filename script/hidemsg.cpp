@@ -4,11 +4,12 @@ int main(int argc, char* argv[]) {
     InputParser inputParser(argc, argv);
     Options opt = inputParser.parseOptions();
 
+    //TODO do main
     if (opt.doEncode) {
-        //TODO: do decode on Encoding422
+
     }
     else if (opt.doDecode) {
-        //TODO implement decoding
+        
     }
 
     return EXIT_SUCCESS;
