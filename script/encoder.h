@@ -16,7 +16,7 @@ class Encoder {
     public:
         Encoder(const std::string &path);
         Encoder(const std::string &path, const std::string key);
-        ~Encoder();
+        virtual ~Encoder();
         virtual BitmapFileHandler::byte* encode(std::string &msg) = 0;
         virtual std::string decode() = 0;
         void encode_and_save(std::string &msg);

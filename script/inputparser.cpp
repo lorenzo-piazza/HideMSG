@@ -2,7 +2,7 @@
 
 [[noreturn]] 
 void InputParser::exitWithError(const std::string& msg) {
-    std::cerr << "Errore: " << msg << std::endl;
+    std::cerr << "Error: " << msg << std::endl;
     std::exit(EXIT_FAILURE);
 }
 
@@ -13,22 +13,24 @@ Options InputParser::parseOptions() {
     opt.doEncode = cmdOptionExists("--encode");
     opt.doDecode = cmdOptionExists("--decode");
     if (!opt.doEncode && !opt.doDecode) {
-        exitWithError("specificare almeno --encode o --decode");
+        exitWithError("--encode or --decode required");
     }
 
     // Mode (obbligatorio)
     if (!cmdOptionExists("--mode")) {
-        exitWithError("manca l'argomento --mode");
+        exitWithError("missing --mode");
     }
     try {
         opt.mode = std::stoi(getCmdOption("--mode"));
+        if(opt.mode != 111 && opt.mode != 224)
+            exitWithError("Not valid mode value");
     } catch (const std::exception&) {
-        exitWithError("valore non valido per --mode");
+        exitWithError("Not valid mode value");
     }
 
     // Path (obbligatorio)
     if (!cmdOptionExists("--path")) {
-        exitWithError("manca l'argomento --path");
+        exitWithError("Missing --path");
     }
     opt.path = getCmdOption("--path");
 
@@ -42,7 +44,7 @@ Options InputParser::parseOptions() {
         // L'indice del messaggio dipende dalla presenza di --key
         int expectedArgs = cmdOptionExists("--key") ? 8 : 6;
         if (argc <= expectedArgs) {
-            exitWithError("manca il messaggio da codificare");
+            exitWithError("Message argument missing");
         }
         opt.message = argv[expectedArgs];
     }

@@ -29,6 +29,4 @@ const std::string& Encoder::generate_path_name() {
     return _path.replace(_path.find_last_of("."), 4, name);
 }
 
-Encoder::~Encoder() {
-
-}
+Encoder::~Encoder() {}
