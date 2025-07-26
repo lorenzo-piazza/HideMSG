@@ -2,6 +2,7 @@
 
 HideMsg is a C++17 program designed to perform image steganography with optional AES encryption.
 This project was developed by Lorenzo Piazza and Marco Borea as part of the Cryptography course at the University of Milan.
+
 It allows users to embed a hidden message inside bitmap images and later extract and decrypt it if needed. 
 The project was developed and tested on a MacBook with Apple Silicon (M1) running macOS Sequoia 15.5.
 
