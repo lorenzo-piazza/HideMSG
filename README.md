@@ -64,6 +64,7 @@ It optionally supports AES encryption to ensure message confidentiality before e
 
 1. **Download Crypto++ (version 8.9.0)**
 
+   Place the downloaded cryptopp folder inside HideMSG folder
    - [Official Website](https://www.cryptopp.com/)
    - [GitHub Repository](https://github.com/weidai11/cryptopp)
 
@@ -71,6 +72,15 @@ It optionally supports AES encryption to ensure message confidentiality before e
 
    Follow the official guide to build the library:  
    [Crypto++ Unix Build Guide](https://www.cryptopp.com/wiki/Linux_(Command_Line))
+
+3. **Run make file**
+
+   Reminder: To use the provided make file place the downloaded cryptopp folder inside HideMSG folder
+   Execute the following:
+   ```bash
+      cd your/path/to/script/folder
+      make
+   ```
 
 ---
 
