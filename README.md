@@ -76,7 +76,8 @@ It optionally supports AES encryption to ensure message confidentiality before e
 
 3. **Run make file**
 
-   Reminder: To use the provided make file place the downloaded cryptopp folder inside HideMSG folder
+   Reminder: To use the provided makefile place the downloaded cryptopp folder inside HideMSG folder.
+   
    Execute the following:
    ```bash
       cd your/path/to/script/folder
