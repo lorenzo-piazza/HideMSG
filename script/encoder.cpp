@@ -1,7 +1,7 @@
 #include "encoder.h"
 
 Encoder::Encoder(const std::string &path) : Encoder(path, "") {}
-Encoder::Encoder(const std::string &path, const std::string key) : _handler(path), _path(path), _aes(_key) {
+Encoder::Encoder(const std::string &path, const std::string key) : _handler(path), _path(path), _aes(key) {
     set_key(key);
 }
 

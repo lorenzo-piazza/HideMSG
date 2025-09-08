@@ -3,11 +3,11 @@
 BitmapFileHandler::BitmapFileHandler(const std::string &path) : _path(path) {
     FILE* f = open_file_safe();
     //extract image size using header bitmap
-    fseek(f, 14, SEEK_SET);
-    fread(&_DIB_size, sizeof(byte), 4, f);
+    fseek(f, BITMAP_FILE_HEADER_SIZE, SEEK_SET);
+    fread(&_header_size, sizeof(byte), 4, f);
     fseek(f, 0, SEEK_SET);
-    _header = new byte[BITMAP_FILE_HEADER_SIZE + _DIB_size];
-    fread(_header, sizeof(byte), BITMAP_FILE_HEADER_SIZE + _DIB_size, f);
+    _header = new byte[_header_size];
+    fread(_header, sizeof(byte), _header_size, f);
     extract_dimensions();
     _pixels = new byte[_size];
     fread(_pixels, sizeof(byte), _size, f);
@@ -54,16 +54,16 @@ BitmapFileHandler::size_type BitmapFileHandler::get_size_without_padding() const
 }
 
 const BitmapFileHandler::byte* BitmapFileHandler::get_header() const {
-    byte* header_cpy = new byte[BITMAP_FILE_HEADER_SIZE + _DIB_size];
+    byte* header_cpy = new byte[_header_size];
     if(header_cpy != nullptr) {
-        std::memcpy(header_cpy, _header, BITMAP_FILE_HEADER_SIZE + _DIB_size);
+        std::memcpy(header_cpy, _header, _header_size);
         return header_cpy;
     }
     return nullptr;
 }
 
 BitmapFileHandler::size_type BitmapFileHandler::get_header_size() const {
-    return BITMAP_FILE_HEADER_SIZE + _DIB_size;
+    return _header_size;
 }
 
 BitmapFileHandler::size_type BitmapFileHandler::get_width() const {
@@ -84,18 +84,18 @@ void BitmapFileHandler::change_pixels(const byte* pixels) {
 }
 
 void BitmapFileHandler::save_file(const std::string& path) {
-    byte* buffer = new BitmapFileHandler::byte[BITMAP_FILE_HEADER_SIZE + _DIB_size + _size];
+    byte* buffer = new BitmapFileHandler::byte[_header_size + _size];
     if(buffer == nullptr)
         throw std::runtime_error("Something went wrong");
 
-    std::memcpy(buffer, _header, BITMAP_FILE_HEADER_SIZE + _DIB_size);
-    std::memcpy(buffer + BITMAP_FILE_HEADER_SIZE + _DIB_size, _pixels, _size);
+    std::memcpy(buffer, _header, _header_size);
+    std::memcpy(buffer + _header_size, _pixels, _size);
 
     FILE* stega_f = fopen(path.c_str(), "wb");
     if(stega_f == nullptr)
         throw std::runtime_error("Something went wrong");
    
-    fwrite(buffer, sizeof(BitmapFileHandler::byte), BITMAP_FILE_HEADER_SIZE + _DIB_size + _size, stega_f);
+    fwrite(buffer, sizeof(BitmapFileHandler::byte), _header_size + _size, stega_f);
     fclose(stega_f);
     delete[] buffer;
     buffer = nullptr;

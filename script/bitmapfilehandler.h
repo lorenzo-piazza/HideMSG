@@ -5,7 +5,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#define BITMAP_FILE_HEADER_SIZE 14
+#define BITMAP_FILE_HEADER_SIZE 10 // Offset to the 10th byte in the bitmap structure
 #define WIDTH_BYTE_N 18
 #define HEIGHT_BYTE_N 22
 #define SIZE_BYTE_N 34
@@ -35,7 +35,7 @@ class BitmapFileHandler {
         size_type _width;
         size_type _height;
         size_type _size;
-        size_type _DIB_size;
+        size_type _header_size;
         byte* _header;
         byte* _pixels;
 };

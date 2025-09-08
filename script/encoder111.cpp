@@ -67,6 +67,8 @@ std::string Encoder111::decode() {
         }
         if(tmp == '&')
             ++delimiter_cont;
+        else
+            delimiter_cont = 0;
         msg += tmp;
     }
     delete[] img;

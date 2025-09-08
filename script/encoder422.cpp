@@ -89,6 +89,8 @@ std::string Encoder422::decode() {
             tmp = tmp | (img[++cont] & 3); // Extract 2 LSBs from the third byte, no shift needed here
             if(tmp == '&')
                 ++delimiter_cont;
+            else
+                delimiter_cont = 0;
             msg += tmp; 
         }
         // After reading one image row, skip padding bytes (if present)
