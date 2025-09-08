@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <stdexcept>
+#include <cstring>
 
 #define BITMAP_FILE_HEADER_SIZE 10 // Offset to the 10th byte in the bitmap structure
 #define WIDTH_BYTE_N 18

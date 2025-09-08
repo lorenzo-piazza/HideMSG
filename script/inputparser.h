@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <optional> 
 
 struct Options {
     bool doEncode;
